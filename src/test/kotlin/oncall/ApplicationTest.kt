@@ -73,11 +73,62 @@ class ApplicationTest : NsTest() {
         }
     }
 
+    @Test
+    fun `날짜 입력 예외 테스트(엔터)`() {
+        assertSimpleTest {
+            runException("\n")
+            assertThat(output()).contains(ERROR_UNVALID_INPUT)
+            assertThat(output()).contains(ON_CALL_MONTH_DAY_INPUT_MENTION)
+        }
+    }
+
+    @Test
+    fun `날짜 입력 예외 테스트(월의 숫자가 범위 밖인 경우)`() {
+        assertSimpleTest {
+            runException("13,금")
+            assertThat(output()).contains(ERROR_UNVALID_INPUT)
+            assertThat(output()).contains(ON_CALL_MONTH_DAY_INPUT_MENTION)
+
+            runException("-5,금")
+            assertThat(output()).contains(ERROR_UNVALID_INPUT)
+            assertThat(output()).contains(ON_CALL_MONTH_DAY_INPUT_MENTION)
+        }
+    }
+
+    @Test
+    fun `날짜 입력 예외 테스트(요일을 안 적은 경우)`() {
+        assertSimpleTest {
+            runException("5,")
+            assertThat(output()).contains(ERROR_UNVALID_INPUT)
+            assertThat(output()).contains(ON_CALL_MONTH_DAY_INPUT_MENTION)
+        }
+    }
+
+    @Test
+    fun `날짜 입력 예외 테스트(요일이 아닌 다른 입력)`() {
+        assertSimpleTest {
+            runException("5,우")
+            assertThat(output()).contains(ERROR_UNVALID_INPUT)
+            assertThat(output()).contains(ON_CALL_MONTH_DAY_INPUT_MENTION)
+        }
+    }
+
+    @Test
+    fun `이름 예외 테스트(이름이 5자 초과인 경우)`() {
+        assertSimpleTest {
+            runException("5,우")
+            assertThat(output()).contains(ERROR_UNVALID_INPUT)
+            assertThat(output()).contains(ON_CALL_MONTH_DAY_INPUT_MENTION)
+        }
+    }
+
     public override fun runMain() {
         main()
     }
 
     companion object {
         private const val ERROR = "[ERROR]"
+        private const val ON_CALL_MONTH_DAY_INPUT_MENTION = "비상 근무를 배정할 월과 시작 요일을 입력하세요>"
+        private const val ERROR_UNVALID_INPUT = "[ERROR] 유효하지 않은 입력 값입니다. 다시 입력해 주세요."
     }
 }
