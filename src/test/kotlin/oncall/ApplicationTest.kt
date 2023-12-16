@@ -116,11 +116,28 @@ class ApplicationTest : NsTest() {
     @Test
     fun `이름 예외 테스트(이름이 5자 초과인 경우)`() {
         assertSimpleTest {
-            runException("5,우")
+            runException("5,금", "허브,쥬니,말랑,라온,헤나헤나헤나")
             assertThat(output()).contains(ERROR_UNVALID_INPUT)
-            assertThat(output()).contains(ON_CALL_MONTH_DAY_INPUT_MENTION)
         }
     }
+
+    @Test
+    fun `이름 예외 테스트(이름이 공백인 경우)`() {
+        assertSimpleTest {
+            runException("5,금", "허브,,말랑,라온,헤나")
+            assertThat(output()).contains(ERROR_UNVALID_INPUT)
+        }
+    }
+
+    @Test
+    fun `공휴일 테스트(휴일 표기)`() {
+        assertSimpleTest {
+            runException("5,금", "허브,쥬니,말랑,라온,헤나", "허브,쥬니,말랑,라온,헤나")
+            assertThat(output()).contains("5월 5일 화(휴일)")
+        }
+    }
+
+
 
     public override fun runMain() {
         main()
