@@ -12,7 +12,7 @@ class OutputView {
         }
     }
 
-    fun getHolidayMark(date: Date, dateNum: Int): String {
+    private fun getHolidayMark(date: Date, dateNum: Int): String {
         if(date.getDayOfTheDate(date.day, dateNum) != "토" && date.getDayOfTheDate(date.day, dateNum) != "일" && date.checkIsHoliday(dateNum)) return "(휴일)"
         return ""
     }

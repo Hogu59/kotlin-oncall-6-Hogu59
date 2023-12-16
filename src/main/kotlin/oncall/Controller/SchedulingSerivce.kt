@@ -19,26 +19,26 @@ class SchedulingSerivce {
         date = inputView.getDate()
         workerList = inputView.getWorkerList()
 
-        outputView.printWorkingList(date, getDutyRoster(date, workerList))
+        outputView.printWorkingList(date, getDutyList(date, workerList))
     }
 
-    fun getDutyRoster(date: Date, workerList: List<List<String>>): List<String> {
+    fun getDutyList(date: Date, workerList: List<List<String>>): List<String> {
         val month = date.month
         val dutyList = mutableListOf<String>()
         for (i in 1..getMaxDateOfMonth(month)) {
             dutyList.add(getWorkerName(date, workerList, i))
         }
-        return getValidDutyRoster(date, dutyList)
+        return getValidDutyList(date, dutyList)
     }
 
-    fun checkNoDoubleWorkingDay(dutyList: List<String>): Boolean {
+    private fun checkNoDoubleWorkingDay(dutyList: List<String>): Boolean {
         for (i in 0..<dutyList.size - 1) {
             if (dutyList[i] == dutyList[i + 1]) return false
         }
         return true
     }
 
-    fun getValidDutyRoster(date: Date, dutyList: List<String>): List<String> {
+    private fun getValidDutyList(date: Date, dutyList: List<String>): List<String> {
         var validDutyList = dutyList.toMutableList()
         while (!checkNoDoubleWorkingDay(validDutyList)) {
             validDutyList = getModifiedDutyList(date, validDutyList).toMutableList()
@@ -46,7 +46,7 @@ class SchedulingSerivce {
         return validDutyList.toList()
     }
 
-    fun getModifiedDutyList(date: Date, dutyList: List<String>): List<String> {
+    private fun getModifiedDutyList(date: Date, dutyList: List<String>): List<String> {
         var modifiedDutyList = dutyList.toMutableList()
         val dateNum: Int = getDateOfDoubleWorkingDay(dutyList)
         if (checkIsHolidayOrWeekend(date, dateNum+1)) {
@@ -57,7 +57,7 @@ class SchedulingSerivce {
         return modifiedDutyList
     }
 
-    fun getModifiedListForWeekend(dutyList: List<String>, dateNum: Int) : List<String> {
+    private fun getModifiedListForWeekend(dutyList: List<String>, dateNum: Int) : List<String> {
         val nextPerson = workerList[1][(workerList[1].indexOf(dutyList[dateNum])+1)% workerList[1].size]
         val modifiedDutyListForWeekend = dutyList.toMutableList()
         modifiedDutyListForWeekend[dateNum] = nextPerson
@@ -70,7 +70,7 @@ class SchedulingSerivce {
         return modifiedDutyListForWeekend.toList()
     }
 
-    fun getModifiedListForWeekday(dutyList: List<String>, dateNum: Int) : List<String> {
+    private fun getModifiedListForWeekday(dutyList: List<String>, dateNum: Int) : List<String> {
         val nextPerson = workerList[0][(workerList[0].indexOf(dutyList[dateNum])+1)% workerList[0].size]
         val modifiedDutyListForWeekday = dutyList.toMutableList()
         modifiedDutyListForWeekday[dateNum] = nextPerson
@@ -83,7 +83,7 @@ class SchedulingSerivce {
         return modifiedDutyListForWeekday
     }
 
-    fun getDateOfDoubleWorkingDay(dutyList: List<String>): Int {
+    private fun getDateOfDoubleWorkingDay(dutyList: List<String>): Int {
         var dateNum = 0
         for (i in 1..<dutyList.size) {
             if (dutyList[i] == dutyList[i - 1]) {
@@ -94,19 +94,19 @@ class SchedulingSerivce {
         return dateNum
     }
 
-    fun getWorkerName(date: Date, workerList: List<List<String>>, dateNum: Int): String {
+    private fun getWorkerName(date: Date, workerList: List<List<String>>, dateNum: Int): String {
         if (checkIsHolidayOrWeekend(date, dateNum)) return workerList[1][(weekendCount++) % workerList[1].size]
         return workerList[0][(weekdayCount++) % workerList[0].size]
     }
 
-    fun checkIsHolidayOrWeekend(date: Date, dateNum: Int): Boolean {
+    private fun checkIsHolidayOrWeekend(date: Date, dateNum: Int): Boolean {
         val day = getDayOfTheDate(date.day, dateNum)
         if (day == "토" || day == "일") return true
         if (date.checkIsHoliday(dateNum)) return true
         return false
     }
 
-    fun getMaxDateOfMonth(month: Int): Int {
+    private fun getMaxDateOfMonth(month: Int): Int {
         return when (month) {
             1 -> Month.JAN.numberOfDay
             2 -> Month.FEB.numberOfDay
@@ -124,7 +124,7 @@ class SchedulingSerivce {
         }
     }
 
-    fun getDayOfTheDate(day: String, dateNum: Int): String {
+    private fun getDayOfTheDate(day: String, dateNum: Int): String {
         val startingDay = dayList.indexOf(day)
         return dayList[(startingDay + dateNum - 1) % dayList.size]
     }

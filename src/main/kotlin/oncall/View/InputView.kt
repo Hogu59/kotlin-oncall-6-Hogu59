@@ -17,9 +17,9 @@ class InputView {
         }
     }
 
-    fun printOnCallMonthDayGuideMention() = print("$ON_CALL_MONTH_DAY_INPUT_MENTION ")
+    private fun printOnCallMonthDayGuideMention() = print("$ON_CALL_MONTH_DAY_INPUT_MENTION ")
 
-    fun validateDate(date: String): Date {
+    private fun validateDate(date: String): Date {
         require(date.isNotEmpty()) { ERROR_UNVALID_INPUT }
         try {
             require(date.split(',').size == 2) { ERROR_UNVALID_INPUT }
@@ -35,9 +35,9 @@ class InputView {
         return Date(month.toInt(), day)
     }
 
-    fun checkValidMonth(month: String): Boolean = month.toInt() in 1..12
+    private fun checkValidMonth(month: String): Boolean = month.toInt() in 1..12
 
-    fun checkValidDay(day: String): Boolean = dayList.contains(day)
+    private fun checkValidDay(day: String): Boolean = dayList.contains(day)
 
     fun getWorkerList(): List<List<String>> {
         val workingList = mutableListOf<List<String>>()
@@ -51,7 +51,7 @@ class InputView {
         }
     }
 
-    fun getWeekDayList(): List<String> {
+    private fun getWeekDayList(): List<String> {
         printWeekdayInputGuideMention()
         val weekdayList = Console.readLine()
         return try {
@@ -61,7 +61,7 @@ class InputView {
         }
     }
 
-    fun getWeekendList(): List<String> {
+    private fun getWeekendList(): List<String> {
         printWeekendInputGuideMention()
         val weekendList = Console.readLine()
         return try {
@@ -71,7 +71,7 @@ class InputView {
         }
     }
 
-    fun getValidList(nameList: String): List<String> {
+    private fun getValidList(nameList: String): List<String> {
         require(nameList.isNotEmpty() && !nameList.contains(" ")) { ERROR_UNVALID_INPUT }
         try {
             val validNameList = nameList.split(',')
