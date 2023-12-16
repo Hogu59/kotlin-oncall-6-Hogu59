@@ -1,4 +1,4 @@
-package oncall
+package oncall.Model
 
 class Date(val month: Int, var day: String) {
     fun checkIsHoliday(date: Int): Boolean = holidayList.contains(listOf(month, date))

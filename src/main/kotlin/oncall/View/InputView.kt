@@ -1,6 +1,7 @@
-package oncall
+package oncall.View
 
 import camp.nextstep.edu.missionutils.*
+import oncall.Model.Date
 import kotlin.NumberFormatException
 
 class InputView {
