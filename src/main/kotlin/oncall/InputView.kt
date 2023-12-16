@@ -21,6 +21,7 @@ class InputView {
     fun validateDate(date: String): Date {
         require(date.isNotEmpty()) { ERROR_UNVALID_INPUT }
         try {
+            require(date.split(',').size == 2) { ERROR_UNVALID_INPUT }
             val (month, day) = date.split(',')
             require(month.isNotEmpty() && day.isNotEmpty()) { ERROR_UNVALID_INPUT }
             require(month.all { it.isDigit() }) { ERROR_UNVALID_INPUT }
@@ -37,15 +38,15 @@ class InputView {
 
     fun checkValidDay(day: String): Boolean = dayList.contains(day)
 
-    fun getWorkingList(): List<List<String>> {
-        val workingList =  mutableListOf<List<String>>()
+    fun getWorkerList(): List<List<String>> {
+        val workingList = mutableListOf<List<String>>()
         return try {
             workingList.add(getWeekDayList())
             workingList.add(getWeekendList())
             workingList
-        } catch (exception : IllegalArgumentException) {
+        } catch (exception: IllegalArgumentException) {
             println(exception.message)
-            getWorkingList()
+            getWorkerList()
         }
     }
 
@@ -54,7 +55,7 @@ class InputView {
         val weekdayList = Console.readLine()
         return try {
             getValidList(nameList = weekdayList)
-        }catch (exception: IllegalArgumentException) {
+        } catch (exception: IllegalArgumentException) {
             throw IllegalArgumentException(ERROR_UNVALID_INPUT)
         }
     }
@@ -64,7 +65,7 @@ class InputView {
         val weekendList = Console.readLine()
         return try {
             getValidList(nameList = weekendList)
-        }catch (exception: IllegalArgumentException) {
+        } catch (exception: IllegalArgumentException) {
             throw IllegalArgumentException(ERROR_UNVALID_INPUT)
         }
     }
@@ -95,9 +96,6 @@ class InputView {
     fun printWeekdayInputGuideMention() = print("$WEEKDAY_LIST_INPUT_MENTION ")
 
     fun printWeekendInputGuideMention() = print("$WEEKEND_LIST_INPUT_MENTION ")
-
-    enum class DayOfWeek {
-    }
 
 
     companion object {
