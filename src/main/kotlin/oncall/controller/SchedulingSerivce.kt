@@ -1,9 +1,9 @@
-package oncall.Controller
+package oncall.controller
 
-import oncall.Model.Date
-import oncall.Model.Month
-import oncall.View.InputView
-import oncall.View.OutputView
+import oncall.model.Date
+import oncall.model.Month
+import oncall.view.InputView
+import oncall.view.OutputView
 
 class SchedulingSerivce {
 
@@ -18,7 +18,6 @@ class SchedulingSerivce {
     fun run() {
         date = inputView.getDate()
         workerList = inputView.getWorkerList()
-
         outputView.printWorkingList(date, getDutyList(date, workerList))
     }
 

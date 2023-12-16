@@ -1,7 +1,7 @@
-package oncall.View
+package oncall.view
 
-import oncall.Model.Date
-import oncall.Model.getMaxDateOfMonth
+import oncall.model.Date
+import oncall.model.getMaxDateOfMonth
 
 class OutputView {
     fun printWorkingList(date: Date, dutyRoster: List<String>) {

@@ -1,6 +1,6 @@
 package oncall
 
-import oncall.Controller.SchedulingSerivce
+import oncall.controller.SchedulingSerivce
 
 fun main() {
     val schedulingSerivce = SchedulingSerivce()

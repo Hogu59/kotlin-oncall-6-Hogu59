@@ -1,4 +1,4 @@
-package oncall.Model
+package oncall.model
 
 enum class Month(val month: Int, val numberOfDay: Int) {
     JAN(1, 31),
