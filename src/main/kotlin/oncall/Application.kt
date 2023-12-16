@@ -3,6 +3,6 @@ package oncall
 import oncall.controller.SchedulingSerivce
 
 fun main() {
-    val schedulingSerivce = SchedulingSerivce()
-    schedulingSerivce.run()
+    val schedulingService = SchedulingSerivce()
+    schedulingService.run()
 }

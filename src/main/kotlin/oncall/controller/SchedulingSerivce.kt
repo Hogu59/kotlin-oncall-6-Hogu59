@@ -48,7 +48,7 @@ class SchedulingSerivce {
     private fun getModifiedDutyList(date: Date, dutyList: List<String>): List<String> {
         var modifiedDutyList = dutyList.toMutableList()
         val dateNum: Int = getDateOfDoubleWorkingDay(dutyList)
-        if (checkIsHolidayOrWeekend(date, dateNum+1)) {
+        if (checkIsHolidayOrWeekend(date, dateNum + 1)) {
             modifiedDutyList = getModifiedListForWeekend(dutyList, dateNum).toMutableList()
         } else {
             modifiedDutyList = getModifiedListForWeekday(dutyList, dateNum).toMutableList()
@@ -56,12 +56,12 @@ class SchedulingSerivce {
         return modifiedDutyList
     }
 
-    private fun getModifiedListForWeekend(dutyList: List<String>, dateNum: Int) : List<String> {
-        val nextPerson = workerList[1][(workerList[1].indexOf(dutyList[dateNum])+1)% workerList[1].size]
+    private fun getModifiedListForWeekend(dutyList: List<String>, dateNum: Int): List<String> {
+        val nextPerson = workerList[1][(workerList[1].indexOf(dutyList[dateNum]) + 1) % workerList[1].size]
         val modifiedDutyListForWeekend = dutyList.toMutableList()
         modifiedDutyListForWeekend[dateNum] = nextPerson
-        for(i in dateNum+1 ..< getMaxDateOfMonth(date.month)) {
-            if(checkIsHolidayOrWeekend(date, i) && dutyList[i] == nextPerson){
+        for (i in dateNum + 1..<getMaxDateOfMonth(date.month)) {
+            if (checkIsHolidayOrWeekend(date, i) && dutyList[i] == nextPerson) {
                 modifiedDutyListForWeekend[i] = dutyList[dateNum]
                 break
             }
@@ -69,12 +69,12 @@ class SchedulingSerivce {
         return modifiedDutyListForWeekend.toList()
     }
 
-    private fun getModifiedListForWeekday(dutyList: List<String>, dateNum: Int) : List<String> {
-        val nextPerson = workerList[0][(workerList[0].indexOf(dutyList[dateNum])+1)% workerList[0].size]
+    private fun getModifiedListForWeekday(dutyList: List<String>, dateNum: Int): List<String> {
+        val nextPerson = workerList[0][(workerList[0].indexOf(dutyList[dateNum]) + 1) % workerList[0].size]
         val modifiedDutyListForWeekday = dutyList.toMutableList()
         modifiedDutyListForWeekday[dateNum] = nextPerson
-        for(i in dateNum+1 ..< getMaxDateOfMonth(date.month)) {
-            if(!checkIsHolidayOrWeekend(date, i) && dutyList[i] == nextPerson){
+        for (i in dateNum + 1..<getMaxDateOfMonth(date.month)) {
+            if (!checkIsHolidayOrWeekend(date, i) && dutyList[i] == nextPerson) {
                 modifiedDutyListForWeekday[i] = dutyList[dateNum]
                 break
             }
