@@ -36,7 +36,7 @@ class SchedulingSerivce {
     fun getValidDutyRoster(date: Date, dutyList: List<String>): List<String> {
         var validDutyList = dutyList.toMutableList()
         while (!checkNoDoubleWorkingDay(validDutyList)) {
-            validDutyList = getModifiedDutyList(date, dutyList).toMutableList()
+            validDutyList = getModifiedDutyList(date, validDutyList).toMutableList()
         }
         return validDutyList.toList()
     }
