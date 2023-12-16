@@ -6,6 +6,6 @@ class SchedulingSerivce {
     private val outputView = OutputView()
     fun run() {
         inputView.getDate()
-
+        inputView.getWorkingList()
     }
 }

@@ -37,7 +37,60 @@ class InputView {
 
     fun checkValidDay(day: String): Boolean = dayList.contains(day)
 
+    fun getWorkingList(): List<List<String>> {
+        val workingList =  mutableListOf<List<String>>()
+        return try {
+            workingList.add(getWeekDayList())
+            workingList.add(getWeekendList())
+            workingList
+        } catch (exception : IllegalArgumentException) {
+            println(exception.message)
+            getWorkingList()
+        }
+    }
 
+    fun getWeekDayList(): List<String> {
+        printWeekdayInputGuideMention()
+        val weekdayList = Console.readLine()
+        return try {
+            getValidList(nameList = weekdayList)
+        }catch (exception: IllegalArgumentException) {
+            throw IllegalArgumentException(ERROR_UNVALID_INPUT)
+        }
+    }
+
+    fun getWeekendList(): List<String> {
+        printWeekendInputGuideMention()
+        val weekendList = Console.readLine()
+        return try {
+            getValidList(nameList = weekendList)
+        }catch (exception: IllegalArgumentException) {
+            throw IllegalArgumentException(ERROR_UNVALID_INPUT)
+        }
+    }
+
+    fun getValidList(nameList: String): List<String> {
+        require(nameList.isNotEmpty() && !nameList.contains(" ")) { ERROR_UNVALID_INPUT }
+        try {
+            val validNameList = nameList.split(',')
+            //입력 인원이 5명 미만 35명 초과인 경우
+            require(validNameList.size in 5..35) { ERROR_UNVALID_INPUT }
+            //이름 중복인 경우
+            require(validNameList.size == validNameList.distinct().size) { ERROR_UNVALID_INPUT }
+            require(checkValidNameList(validNameList)) { ERROR_UNVALID_INPUT }
+        } catch (exception: Exception) {
+            throw IllegalArgumentException(ERROR_UNVALID_INPUT)
+        }
+        return nameList.split(',')
+    }
+
+    fun checkValidNameList(validNameList: List<String>): Boolean {
+        for (i in validNameList.indices)
+            if (!checkValidName(validNameList[i])) return false
+        return true
+    }
+
+    fun checkValidName(name: String): Boolean = name.length in 1..5
 
     fun printWeekdayInputGuideMention() = print("$WEEKDAY_LIST_INPUT_MENTION ")
 
