@@ -85,17 +85,17 @@ class InputView {
         return nameList.split(',')
     }
 
-    fun checkValidNameList(validNameList: List<String>): Boolean {
+    private fun checkValidNameList(validNameList: List<String>): Boolean {
         for (i in validNameList.indices)
             if (!checkValidName(validNameList[i])) return false
         return true
     }
 
-    fun checkValidName(name: String): Boolean = name.length in 1..5
+    private fun checkValidName(name: String): Boolean = name.length in 1..5
 
-    fun printWeekdayInputGuideMention() = print("$WEEKDAY_LIST_INPUT_MENTION ")
+    private fun printWeekdayInputGuideMention() = print("$WEEKDAY_LIST_INPUT_MENTION ")
 
-    fun printWeekendInputGuideMention() = print("$WEEKEND_LIST_INPUT_MENTION ")
+    private fun printWeekendInputGuideMention() = print("$WEEKEND_LIST_INPUT_MENTION ")
 
 
     companion object {
